@@ -1,0 +1,719 @@
+/* LUDOMAN / Telegram-inspired Observatory — design layer v1.
+   No remote fonts, frameworks, images or runtime dependencies.
+   Loaded AFTER the existing stylesheet. Keeps data/JS functionality intact. */
+:root{
+  color-scheme:dark;
+  --tg-bg:#090e18;--tg-surface:#121b2a;--tg-surface2:#192639;
+  --tg-elevated:#20344b;--tg-line:#2a405a;--tg-blue:#55b9ff;
+  --tg-blue-strong:#258fea;--tg-text:#f0f6ff;--tg-muted:#a6bdd2;
+  --tg-green:#51dcaa;--tg-red:#ff8696;--tg-gold:#f3c66f;
+  --night:var(--tg-bg);--paper:var(--tg-surface);--ink:var(--tg-text);
+  --muted:var(--tg-muted);--line:var(--tg-line);--blue:var(--tg-blue);
+  --link:#91d8ff;--green:var(--tg-green);--red:var(--tg-red);
+  font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  font-optical-sizing:auto;
+}
+html{scroll-padding-top:100px}
+body{
+  color:var(--tg-text);
+  background:radial-gradient(ellipse 80% 420px at 50% -150px,#1b315e 0%,transparent 72%),
+    linear-gradient(#080e19e8,#080e19f1),url("__OBSERVATORY_BG__") center top/cover fixed,#090e18;
+}
+.wrap{width:min(1160px,calc(100% - 40px))}
+a{color:var(--link)}
+button,input{font-family:inherit}
+a,button,summary{-webkit-tap-highlight-color:transparent}
+button:not(:disabled),a,summary{transition:background-color .18s ease,border-color .18s ease,color .18s ease,transform .18s ease}
+button:active:not(:disabled),.introLinks a:active,.resourceList>a:active,#pools .poolActions a:active{transform:scale(.98)}
+a:focus-visible,button:focus-visible,summary:focus-visible,input:focus-visible{outline:2px solid var(--tg-blue);outline-offset:3px}
+header{background:#0d1524f0;border-bottom:1px solid #2c4463;backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px)}
+.nav{min-height:70px;gap:18px}
+.brandMark{box-shadow:0 0 0 2px #314968,0 5px 20px #050a14a8}
+.brand strong{font-size:18px;letter-spacing:-.045em}
+.brand span{color:#b6cce0;font-size:14px}
+nav{gap:5px}
+nav a{padding:10px 13px;color:#b1c4d7;border-radius:12px;font-weight:600}
+nav a.on,nav a:hover{background:#1e3958;color:#f4faff}
+.langs{background:#17253a;padding:3px;border:1px solid #2d4560;border-radius:12px}
+.langs button{border-radius:9px;min-width:39px;min-height:35px;color:#b6cde2}
+.langs button.on{background:#288fd9;color:#fff;box-shadow:0 2px 10px #0613268c}
+main.wrap{padding-bottom:10px}
+.hero{margin:22px 0 14px;min-height:275px;border:1px solid #3b5c8d;border-radius:24px;
+  background:radial-gradient(ellipse at 81% 30%,#294c91 0%,transparent 48%),
+  radial-gradient(circle at 40% 110%,#132c55,transparent 60%),
+  linear-gradient(125deg,#111d35,#15274b);
+  box-shadow:0 18px 54px #02071164;isolation:isolate}
+.hero::before{opacity:.14}
+.hero::after{content:"";position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(115deg,#ffffff08,transparent 50%);border-radius:inherit}
+.herotext{padding:clamp(23px,3.5vw,45px);max-width:68%}
+.hero .eyebrow{color:#98d1fc;letter-spacing:.13em}
+.hero .eyebrow i{box-shadow:0 0 0 5px #269de421}
+.hero h1{margin:13px 0 12px;font-size:clamp(39px,5.5vw,68px);line-height:1.03;letter-spacing:-.065em}
+.hero h1 em{font-style:normal;font-weight:550;font-family:inherit;letter-spacing:-.05em;color:#81ceff}
+.hero p{color:#d2e1f3;font-size:15px;max-width:510px;line-height:1.65}
+.heroArt{background-size:auto 83%;filter:drop-shadow(0 6px 28px #67acff40)}
+.introLinks{gap:10px;margin-top:21px}
+.introLinks a{display:inline-flex;align-items:center;justify-content:center;
+  min-height:42px;padding:9px 17px;border-radius:12px;font-size:14px;
+  background:#1d3554;border:1px solid #52759b;color:#f5faff}
+.introLinks a:first-child{background:#4bb4fc;color:#081a2c;border-color:#77caff}
+.introLinks a:hover{background:#2c5277;text-decoration:none;transform:translateY(-2px)}
+.introLinks a:first-child:hover{background:#83d0ff;color:#071b2c}
+.syncBar{background:#101c2c;border-color:#2b435f;border-radius:16px;
+  padding:12px 17px;box-shadow:0 6px 20px #050b152b}
+.syncBar p{color:#e3f5ff}
+.syncBar small{color:#9eb8ce}
+#refreshData{border-radius:11px;background:#213d5b;border-color:#476d92;color:#eaf7ff}
+#refreshData:hover{background:#2f5a81}
+.panel,.graph,.summary,.columns .panel,.resources,#pools,#activity,#wallets{
+  border:1px solid var(--tg-line);border-radius:20px;
+  background:linear-gradient(155deg,#151f30 0%,#111927 100%);
+  box-shadow:0 8px 34px #03091145;color:var(--tg-text)}
+.graph{background:linear-gradient(160deg,#172640 0%,#101a2d 76%);border-color:#315172}
+.graph .eyebrow{color:#86caff}
+.graph h2{color:#a8c6e0;margin-top:15px}
+.graph .price{color:#f4faff;letter-spacing:-.055em}
+.graph .chartCaption{color:#abc1d7}
+.graph #readout{border-color:#314964;background:#0e192a}
+.graph .capMethod{border-color:#2b4056;color:#98aec2}
+.graph #plot{border-radius:15px;overflow:hidden}
+.graphControls{gap:9px}
+.graph .tabs,.columns .tabs,.columns .smallTabs{background:#0a1728;border:1px solid #2a425c;border-radius:12px;padding:3px}
+.graph .tabs button,.columns .tabs button,.columns .smallTabs button{border-radius:9px;min-height:34px;padding:7px 12px;color:#bed3e6}
+.graph .tabs .on,.columns .tabs .on,.columns .smallTabs .on{background:#26659c;color:#fff;box-shadow:0 2px 8px #050d1780}
+.summary{margin-top:18px;background:linear-gradient(150deg,#182b44,#142037);border-color:#2a496b}
+.summary h2,.panel h2:not(.graph h2){color:#f1f7ff;font-weight:730;letter-spacing:-.035em}
+#stats{gap:11px}
+.stat{padding:16px;border-radius:15px;background:#102036;border:1px solid #34506f;box-shadow:inset 0 1px #ffffff0a}
+.stat b{color:#fff;font-size:clamp(21px,2.4vw,32px);line-height:1.22;margin:5px 0}
+.stat small{color:#a4bbd0}
+.stat span{font-weight:680}
+.stat span.buy,.stat span.sell,.stat span.burn{background:none;padding:0}
+.columns{gap:16px}
+.columns .panel{min-width:0}
+.sectionHeading{flex-wrap:wrap}
+.tag{background:#233a55;color:#badcf5;border:1px solid #355676}
+.row{border-top-color:#263950;padding:12px 3px}
+.row:hover{background:#ffffff07}
+.row.trade-buy,.row.trade-sell,.row.trade-burn{border-left:3px solid transparent;border-radius:8px;padding-left:10px}
+#activity .row.trade-buy{border-left:3px solid #52d5a2;background:#16362c42}
+#activity .row.trade-sell{border-left:3px solid #ff8191;background:#40232a50}
+#activity .row.trade-burn{border-left:3px solid #f5c16b;background:#3a2c1b48}
+.row b{color:#edf6ff}
+.row small{color:#a5bcd2}
+.columns .row .walletAddress{color:#d5e9fd}
+.columns .walletRole.buy,.columns .badge.buy{color:#75e7b2}
+.columns .walletRole.sell,.columns .badge.sell{color:#ff9bac}
+.columns .walletRole.burn,.columns .badge.burn{color:#f5c377}
+.position{color:#9fb6ca}
+.columns :is(.row,.walletResult) .projectBadge{border-radius:8px;background-color:#1d2b3e;min-height:28px}
+.columns :is(.row,.walletResult) .projectBadge.fragmentNumber{background:#813c99;color:#fff;border-color:#dd8bfa}
+.domainBadge.digits{border-radius:7px}
+#more,.resourceList>a,.resourceList>button,#pools .poolActions a{
+  background:#1c3958;border:1px solid #3a648b;border-radius:11px;color:#eaf5ff}
+#more{min-height:43px}
+#more:hover,.resourceList>a:hover,.resourceList>button:hover,#pools .poolActions a:hover{background:#2b5277}
+.supplyGrid a,#pools .poolCard{background:#17263a;border:1px solid #2b4665;border-radius:14px;padding:15px}
+.supplyGrid a:hover,#pools .poolCard:hover{border-color:#4785b3}
+.supplyGrid small{color:#b5c9da}
+#pools .poolCard h3{color:#f2f8ff}
+#pools .poolCard p{color:#a9c0d3}
+#pools .poolGrid{gap:12px}
+#pools .poolActions a{min-height:40px}
+.walletSearch,.badgeLegend{background:#101b2b;border-color:#2b4563;border-radius:12px}
+.walletSearch summary,.badgeLegend summary{color:#e1f1fd}
+.tradeSize input[type=number],.walletSearchForm input{background:#091729;border-color:#385575;color:#f5faff;border-radius:10px;min-height:38px}
+.walletSearchForm button{background:#285982;border-color:#478bb5;border-radius:10px;min-height:40px}
+.resources{background:linear-gradient(155deg,#152840,#152036)}
+.resourcesGrid article{border-color:#36516d}
+.resourceList>a,.resourceList>button{min-height:45px;padding:10px 13px}
+footer{background:transparent;border-top:1px solid #314862;border-radius:0;color:#bed4e7;margin-top:20px}
+footer>span{color:#a8c2d8}
+@media(min-width:900px){
+ .columns .panel{padding:23px}
+ .hero{min-height:305px}
+ .heroArt{background-size:auto 88%}
+}
+@media(max-width:800px){
+ html{scroll-padding-top:114px}
+ .wrap{width:calc(100% - 28px)}
+ .nav{gap:5px;padding-top:5px}
+ .brand strong{font-size:16px}
+ nav{overflow-x:auto;scrollbar-width:none;justify-content:space-between}
+ nav::-webkit-scrollbar{display:none}
+ nav a{min-height:42px;display:inline-flex;align-items:center;white-space:nowrap;padding:9px 10px}
+ .hero{margin-top:14px;min-height:230px}
+ .herotext{max-width:75%;padding:24px}
+ .resourcesGrid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:590px){
+ .wrap{width:calc(100% - 22px)}
+ .hero{border-radius:20px;min-height:250px}
+ .hero h1{font-size:clamp(34px,8vw,46px)}
+ .herotext{max-width:100%;padding:20px 18px 78px}
+ .hero p{max-width:100%;padding-right:0}
+ .heroArt{width:100px;height:100px;top:auto;bottom:-7px;right:7px;inset:auto 7px -7px auto;opacity:.83;background-size:contain}
+ .hero .introLinks{max-width:calc(100% - 90px)}
+ .introLinks a{min-height:40px;padding:8px 11px}
+ .graph,.summary,.columns .panel,.resources{padding:16px}
+ .graphTop{gap:13px}
+ .graphControls{width:100%;justify-items:stretch}
+ .graph .tabs{width:100%;justify-content:space-between}
+ .graph .tabs button{flex:1 1 auto;padding:8px 6px;font-size:12px}
+ .graph .price{font-size:clamp(29px,8.7vw,39px)}
+ .graph #plot,.graph #plot svg{min-height:210px;height:210px}
+ #stats{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+ .stat{padding:12px}
+ .stat b{font-size:clamp(19px,5.4vw,26px)}
+ .columns{gap:14px}
+ #pools .poolGrid{grid-template-columns:1fr}
+ .resourcesGrid{grid-template-columns:1fr}
+ .row{min-width:0}
+ .row>div{overflow-wrap:anywhere}
+ .syncBar{flex-wrap:wrap}
+ body{background-attachment:scroll}
+}
+@media(max-width:360px){
+ .brand strong{font-size:14px}
+ .brandMark{width:30px;height:30px}
+ .nav{column-gap:3px}
+ nav a{font-size:12px;padding:9px 7px}
+ .hero .introLinks{max-width:100%}
+ .heroArt{opacity:.4}
+ .graph .tabs button{font-size:11px}
+}
+@media(hover:hover){
+ .stat:hover,#pools .poolCard:hover{transform:translateY(-2px)}
+}
+@media(prefers-reduced-motion:reduce){
+ *,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;transition-duration:.01ms!important}
+}
+
+/* FIGMA TELEGRAM IOS UI KIT — SOURCE-ALIGNED
+   Reference: fIjhy6ddPFSXmia3DCvQa2
+   Dark selected tab: 6028:2120, row: 6023:2116, dark label: 6781:30558.
+   Accent #008BFF; 52px regular list-row minimum; rounded selected tab.
+   Native system font replaces Figma's licensed iostgico/SF Pro assets. */
+:root{--tg-accent:#008bff;--tg-blue:#008bff;--tg-blue-strong:#008bff;--tg-selected:#146ab1}
+nav a.on,nav a[aria-current="location"]{
+ color:#d8efff;background:#008bff28;box-shadow:inset 0 0 0 1px #008bff55}
+.langs button.on{background:var(--tg-selected);color:#fff}
+.graph .tabs .on,.columns .tabs .on,.columns .smallTabs .on{
+ border-radius:100px;background:#008bff2e;color:#97d7ff;
+ box-shadow:inset 0 0 0 1px #008bff70}
+.graph .tabs button,.columns .tabs button,.columns .smallTabs button{
+ min-height:40px;line-height:1.25}
+#activity .row,#wallets .row{min-height:52px}
+#activity .row .walletAddress,#wallets .row .walletAddress{line-height:1.45}
+#activity .row .badge,#wallets .row .badge{line-height:1.4}
+#refreshData,.walletSearchForm button{border-color:#008bff91}
+#refreshData:focus-visible,.walletSearchForm button:focus-visible{outline-color:#94d9ff}
+@media(max-width:800px){
+ nav a{min-height:44px}
+}
+
+/* Four compact, fully visible tabs on narrow Telegram WebViews. */
+@media(max-width:590px){
+ #nav{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:3px;overflow:visible;width:100%}
+ #nav a{display:flex;align-items:center;justify-content:center;min-width:0;
+  font-size:12px;white-space:nowrap;line-height:1.2;padding:9px 2px;text-align:center}
+ #nav a[href="#links"]{font-size:0}
+ #nav a[href="#links"]::after{content:"Ссылки";font-size:12px}
+ html[lang="en"] #nav a[href="#links"]::after{content:"Links"}
+}
+
+/* UNIVERSAL OBSERVATORY UI V1 — reusable across token projects.
+   Layout, labels, accessible filter, gem/paper honors and animated burn cards.
+   No remote art/fonts: all decoration stays inside standalone HTML/CSS. */
+.feedFilterBar{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:9px;margin:11px 0}
+.feedFilterBar #filters{margin:0}
+#badgeFilterToggle{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:42px;
+ padding:8px 13px;border:1px solid #497197;border-radius:12px;background:#173552;color:#e6f3ff;font-weight:750;font-size:13px}
+#badgeFilterToggle[aria-expanded="true"]{background:#184a73;border-color:#82c9ff}
+#badgeFilterCount{color:#9fd6fa;font-size:12px}
+.filterPanel{background:#0f2033;border:1px solid #355573;padding:14px;border-radius:14px;margin:0 0 14px}
+.filterPanel .onlyBadges{margin:0 0 10px;min-height:34px}
+.filterPanel .tradeSize{margin:0 0 13px;gap:10px}
+.filterPanel .tradeSize label{min-height:32px}
+.filterBadgesHeading{display:flex;align-items:center;justify-content:space-between;gap:9px;
+ border-top:1px solid #2b4961;padding-top:13px;margin-top:4px}
+.filterBadgesHeading strong{font-size:13px;color:#cfe5f8}
+#clearBadgeFilters{border:0;background:none;color:#88cfff;text-decoration:underline;font-size:12px;padding:6px}
+.badgeFilterSearch{display:block;width:100%;min-width:0;min-height:42px;margin:9px 0 12px;
+ padding:9px 12px;border:1px solid #3c5d7e;border-radius:10px;background:#0b182a;
+ color:#ecf7ff;font-size:14px}
+.badgeFilterSearch::placeholder{color:#9fb1c7}
+.badgeFilterList{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.badgeFilterItem{display:flex;align-items:center;gap:8px;min-height:39px;padding:7px 9px;
+ border:1px solid #354d66;border-radius:10px;background:#172b40;
+ color:#e5f2fd;font-size:12px;overflow-wrap:anywhere;cursor:pointer}
+.badgeFilterItem:has(input:checked){border-color:#008bff;background:#153e60}
+.badgeFilterItem input{accent-color:#008bff;flex:0 0 17px;width:17px;height:17px}
+.filterHint{margin:12px 0 0;font-size:12px;color:#93aec5;line-height:1.5}
+#feed{display:grid;gap:13px;margin-top:14px}
+/* A transaction is a standalone, readable card rather than a compressed table row. */
+#feed .operationRow{display:flex;flex-direction:column;align-items:stretch;gap:11px;position:relative;
+ padding:16px 17px!important;margin:0;min-width:0;overflow:hidden;border:1px solid #344e67;
+ border-left:4px solid #486787!important;border-radius:16px;background:#172b3d!important;
+ box-shadow:0 5px 15px #030c172d;isolation:isolate}
+#feed .operationRow.trade-buy{border-left-color:#45d9a2!important;background:linear-gradient(110deg,#153b35,#152d39 50%,#142637)!important}
+#feed .operationRow.trade-sell{border-left-color:#ff7a8c!important;background:linear-gradient(110deg,#3a2636,#262837 55%,#1b2636)!important}
+#feed .operationRow>div{position:relative;z-index:1;min-width:0}
+#feed .operationRow .opHeader{display:flex;align-items:center;justify-content:space-between;gap:9px}
+#feed .operationRow .opKind{font-weight:780;letter-spacing:-.015em;font-size:15px;line-height:1.3}
+#feed .operationRow .opKind.buy{color:#7ef0c0}
+#feed .operationRow .opKind.sell{color:#ffadba}
+#feed .operationRow .opKind.burn{color:#ffe1a0}
+#feed .operationRow .opDate{font-size:11px;color:#adc4da;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-left:auto}
+#feed .operationRow .opToggle{display:grid!important;place-items:center;flex:0 0 35px;width:35px;min-height:35px;
+ color:#d3e6f6;background:#1c3852;border:1px solid #436380;border-radius:10px;padding:0}
+#feed .operationRow .opToggle span{display:block;width:auto;height:auto;border:0;
+ transform:none;color:inherit;font:750 23px/1 system-ui,sans-serif}
+#feed .operationRow .opToggle[aria-expanded="true"] span{transform:rotate(180deg)}
+#feed .operationRow .opAmounts{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(0,1fr);
+ gap:12px;align-items:start;width:100%}
+#feed .operationRow .opAmounts>div{min-width:0;display:flex;flex-direction:column;gap:2px}
+#feed .operationRow .opAmountValue{display:block;overflow-wrap:anywhere;
+ color:#f5faff;font-size:clamp(18px,2.2vw,24px);font-weight:795;letter-spacing:-.028em;
+ line-height:1.22;font-variant-numeric:tabular-nums}
+#feed .operationRow .opAmountUnit{color:#a6c1d7;font-size:12px;font-weight:650;line-height:1.4}
+#feed .operationRow .opGram{text-align:right;align-items:flex-end}
+#feed .operationRow .opWallet{padding-top:10px;border-top:1px solid #ffffff20;font-size:14px}
+#feed .operationRow .walletIdentity{display:flex;align-items:center;gap:6px 8px;flex-wrap:wrap;width:100%;max-width:100%}
+#feed .operationRow .walletAddress{font-weight:720;text-decoration-thickness:1px;text-underline-offset:3px;
+ max-width:100%;overflow-wrap:anywhere}
+#feed .operationRow .domainBadge.digits{vertical-align:middle;flex:0 0 auto}
+#feed .operationRow .projectBadges{display:flex;flex-wrap:wrap;width:100%;gap:6px;margin-top:5px}
+#feed .operationRow .opMobile{display:none;gap:10px;justify-content:space-between;
+ padding-top:10px;border-top:1px solid #ffffff20;font-size:12px;color:#afc2d5}
+#feed .operationRow .opMobile:not([hidden]){display:flex!important;grid-column:auto;text-align:left}
+#feed .operationRow .opMobile a{color:#8cd5ff;font-weight:700}
+#feed .operationRow .opDesktop{display:none!important}
+#feed .operationRow .projectBadge{min-height:28px}
+#feed .operationRow .domainDetails{max-width:100%;width:auto}
+/* Burn decorations cover the whole card; text remains fully legible above them. */
+#feed .operationRow.trade-burn{
+ border:2px solid #d47b45!important;border-left:4px solid #ffba45!important;
+ background:linear-gradient(120deg,#4a1a1a,#733319,#4d1c28,#783b18,#401d22)!important;
+ background-size:300% 300%!important;
+ animation:observatoryFireGlow 7s ease-in-out infinite alternate;
+ box-shadow:0 0 17px #fa5c242b,inset 0 0 20px #ffae2520}
+#feed .operationRow.trade-burn::before{content:"🔥  🔥     🔥  🔥";position:absolute;inset:auto 0 -12px;
+ text-align:center;font-size:36px;letter-spacing:8px;opacity:.19;pointer-events:none;
+ filter:blur(1px);animation:observatoryFlames 4.4s ease-in-out infinite alternate;z-index:0}
+#feed .operationRow.trade-burn .opAmountValue{color:#fff5e8}
+@keyframes observatoryFireGlow{
+ 0%{background-position:0% 55%;border-color:#b95f34;box-shadow:0 0 14px #eb702c32}
+ 50%{background-position:70% 12%;border-color:#ffb75a;box-shadow:0 0 24px #fa9a2342}
+ 100%{background-position:100% 75%;border-color:#db6938;box-shadow:0 0 16px #f4654444}
+}
+@keyframes observatoryFlames{from{transform:translateY(5px) scale(1);opacity:.10}to{transform:translateY(-15px) scale(1.07);opacity:.28}}
+/* Honors apply only to the current top 10 in the appropriate rankings. */
+#rank .rankingRow{position:relative;isolation:isolate;overflow:hidden;border-radius:14px;
+ border:1px solid #355269;padding:14px 12px;margin-bottom:9px;gap:12px;
+ background:#152438;min-width:0}
+#rank .rankingRow>div{z-index:1;position:relative;min-width:0}
+#rank .rankingRow .walletIdentity{max-width:100%;width:100%}
+#rank .rankingRow .projectBadges{width:100%;margin-top:4px}
+#rank .rankingRow .rankHonor{display:table;width:max-content;max-width:100%;border-radius:100px;
+ font:760 11px/1.4 system-ui,sans-serif;padding:4px 11px;margin:0 0 8px;
+ letter-spacing:.03em;text-transform:uppercase}
+#rank .rankingRow.diamondHands{border:2px solid transparent;
+ background:linear-gradient(#151e33,#192c46) padding-box,
+ linear-gradient(115deg,#c2ecff,#dba5ff,#74ffd7,#ffe3a0,#9fb8ff,#e3a8ff,#c2ecff) border-box;
+ background-size:100% 100%,350% 350%;animation:diamondSweep 8s linear infinite;
+ box-shadow:inset 0 0 18px #99cfff13,0 0 11px #acaaff20}
+#rank .diamondHands::before{content:"💎 ✦ 💠 ✧ 💎";position:absolute;inset:auto 2px 1px auto;
+ opacity:.22;font-size:24px;pointer-events:none;z-index:0;
+ animation:diamondSpark 5s ease-in-out infinite alternate}
+#rank .diamondHonor{color:#f8efff;background:linear-gradient(105deg,#634c92,#3b647d,#74613d);
+ border:1px solid #d9caff88;text-shadow:0 0 9px #bbaaffaa}
+@keyframes diamondSweep{from{background-position:0 0,0% 50%}to{background-position:0 0,100% 50%}}
+@keyframes diamondSpark{from{opacity:.1;transform:translateY(3px)}to{opacity:.30;transform:translateY(-3px)}}
+#rank .rankingRow.paperHands{border:2px solid transparent;
+ background:linear-gradient(#232431,#1a2637) padding-box,
+ linear-gradient(115deg,#f7eee8,#a9b6c8,#e5b3ab,#eee3d8,#a9b6c8) border-box;
+ background-size:100% 100%,280% 280%;animation:paperBorder 9s linear infinite}
+#rank .paperHands::before{content:"🧻   🧻   🧻   🧻\A 🧻   🧻   🧻   🧻\A 🧻   🧻   🧻   🧻";
+ white-space:pre;position:absolute;inset:-12px;z-index:0;font-size:28px;line-height:1.9;
+ opacity:.13;pointer-events:none;transform:rotate(-8deg) scale(1.07);animation:paperDrift 8s ease-in-out infinite alternate}
+#rank .paperHonor{color:#ecdddd;background:#53424b;border:1px solid #ccbbc7aa}
+@keyframes paperBorder{from{background-position:0 0,0% 30%}to{background-position:0 0,100% 60%}}
+@keyframes paperDrift{from{transform:rotate(-8deg) translateY(-6px) scale(1.07)}to{transform:rotate(-6deg) translateY(7px) scale(1.07)}}
+.serviceEmoji{display:inline-block;margin-right:2px;font-size:15px;line-height:1}
+/* Hero places the token emblem beside the identity rather than over the CTA. */
+.hero{min-height:295px;display:flex;align-items:center;border-radius:24px}
+.heroArt{width:33%;height:100%;right:16px;inset:0 16px 0 auto;background-size:contain;
+ background-position:center;filter:drop-shadow(0 6px 20px #62b0ff50)}
+.hero .herotext{max-width:65%;padding:30px clamp(23px,3.8vw,49px)}
+.hero h1{line-height:1.06;margin-bottom:11px}
+.hero p{max-width:38rem}
+.hero .introLinks{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-top:22px}
+.hero .introLinks a{min-height:46px;padding:11px 17px}
+@media(max-width:800px){
+ .hero{min-height:255px}
+ .hero .herotext{max-width:68%;padding:23px}
+ .heroArt{width:30%;right:10px}
+}
+@media(max-width:640px){
+ .feedFilterBar{display:flex;flex-direction:column;align-items:stretch;gap:8px}
+ .feedFilterBar #filters{width:100%;display:flex;justify-content:space-between;gap:2px}
+ .feedFilterBar #filters button{flex:1 1 auto;min-width:0;font-size:12px;padding:8px 4px}
+ .feedFilterBar #badgeFilterToggle{align-self:flex-end}
+ #feed .operationRow{padding:14px 13px!important}
+ #feed .operationRow .opAmounts{grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:8px}
+ #feed .operationRow .opAmountValue{font-size:clamp(17px,4.6vw,21px)}
+ #feed .operationRow .opDate{font-size:10px}
+ #rank .rankingRow{padding:11px 10px}
+ .hero{min-height:285px;display:block}
+ .hero .herotext{max-width:100%;padding:22px 18px}
+ .hero h1{font-size:clamp(30px,7.6vw,42px);max-width:calc(100% - 115px);min-height:78px}
+ .hero p{max-width:100%;font-size:14px}
+ .heroArt{width:112px;height:112px;inset:15px 12px auto auto;opacity:.95;background-size:contain}
+ .hero .introLinks{width:100%;display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:19px}
+ .hero .introLinks a{min-width:0;min-height:44px;padding:9px 7px;justify-content:center;font-size:12px}
+}
+@media(max-width:390px){
+ .badgeFilterList{grid-template-columns:minmax(0,1fr)}
+ .hero h1{max-width:calc(100% - 99px);font-size:31px}
+ .heroArt{width:97px;height:97px}
+ .hero{min-height:270px}
+ #rank .rankingRow{grid-template-columns:minmax(0,1fr) auto}
+ #rank .rankingRow b{overflow-wrap:anywhere;font-size:12px}
+ #feed .operationRow .opAmountValue{font-size:17px}
+ #feed .operationRow .opAmountUnit{font-size:11px}
+}
+@media(prefers-reduced-motion:reduce){
+ #feed .operationRow.trade-burn,#feed .operationRow.trade-burn::before,
+ #rank .rankingRow.diamondHands,#rank .diamondHands::before,
+ #rank .rankingRow.paperHands,#rank .paperHands::before{animation:none!important}
+}
+
+/* OBSERVATORY OPERATION CARDS V1.1 — no per-card expansion, direct explorer action. */
+#feed .operationRow .opHeader{align-items:center;gap:12px}
+#feed .operationRow .opDate{flex:0 1 auto;text-align:right}
+#feed .operationRow .opTransaction{
+ display:inline-flex;position:relative;z-index:2;align-self:flex-end;justify-content:center;align-items:center;
+ gap:7px;min-height:42px;margin-top:-3px;padding:8px 12px;
+ color:#a0ddff;background:#1c3a53;border:1px solid #4576a0;border-radius:10px;
+ font-size:13px;font-weight:770;line-height:1.2;text-decoration:none;white-space:nowrap;
+ transition:background .18s,border-color .18s;
+}
+#feed .operationRow .opTransaction::after{content:"↗";font-size:16px;line-height:1}
+#feed .operationRow .opTransaction:hover{background:#26516f;border-color:#81caff;color:#eff9ff}
+#feed .operationRow .opTransaction:focus-visible{outline:2px solid #b3e6ff;outline-offset:3px}
+#activity #more{display:flex;justify-content:center;align-items:center;width:100%;
+ min-height:48px;margin-top:14px;padding:11px 13px;background:#183f5e;
+ border:1px solid #547d9d;border-radius:12px;color:#e2f3ff;font-size:14px;font-weight:760}
+#activity #more:hover{background:#23577c;border-color:#8ccfff}
+#activity #more[hidden]{display:none}
+@media(max-width:590px){
+ #feed .operationRow .opTransaction{min-height:44px;margin-top:-5px}
+}
+
+
+/* LUDOMAN OBSERVATORY v1.2 — mobile-first polish, compact trades and per-DEX identity. */
+html{scroll-behavior:smooth}
+#market,#activity,#wallets,#pools,#supply,#links{scroll-margin-top:150px}
+#market{background:linear-gradient(162deg,#111c30,#152238 80%)!important}
+.summary{background:linear-gradient(150deg,#142139,#192b45)!important;border-color:#34496b}
+#activity{background:linear-gradient(157deg,#17273a,#1b3046)!important}
+#wallets{background:linear-gradient(157deg,#192b40,#203753)!important}
+#pools{background:linear-gradient(157deg,#1c3047,#23405a)!important}
+#supply{background:linear-gradient(157deg,#20384f,#29475f)!important}
+#links{background:linear-gradient(157deg,#243f55,#2d4f68)!important}
+#activity,#wallets,#pools,#supply,#links{border-color:#3b536e}
+#nav{display:flex;flex-wrap:wrap;gap:4px;justify-content:center;align-items:center;min-width:0}
+#nav a{flex:0 0 auto;white-space:nowrap;padding:10px 9px;font-size:12px;text-align:center}
+#nav a[href="#links"]{font-size:12px}
+#nav a[href="#links"]::after{content:none!important}
+#feed{gap:9px}
+#feed .operationRow{padding:11px 13px!important;gap:7px;box-shadow:0 2px 8px #030b1724;border-radius:13px}
+#feed .operationRow .opHeader{min-height:25px}
+#feed .operationRow .opTitleGroup{display:flex;align-items:center;gap:10px;min-width:0}
+#feed .operationRow .opKind{font-size:14px}
+#feed .operationRow .opDate{font-size:11px;color:#adbed2}
+#feed .operationRow .opAmounts{gap:7px}
+#feed .operationRow .opAmountValue{font-size:clamp(17px,2vw,21px);line-height:1.17}
+#feed .operationRow .opAmountUnit{font-size:11px}
+#feed .operationRow .opFooter{display:grid;grid-template-columns:minmax(0,1fr) auto;
+ gap:10px;align-items:start;padding-top:8px;border-top:1px solid #ffffff20}
+#feed .operationRow .opWallet{padding:0;border:0;min-width:0;font-size:12px}
+#feed .operationRow .walletIdentity{column-gap:4px;row-gap:4px}
+#feed .operationRow .walletAddress{font-size:12px;line-height:1.55;overflow-wrap:anywhere}
+#feed .operationRow .projectBadges{gap:4px;margin-top:4px}
+#feed .operationRow .opTransaction,
+#feed .operationRow .opTransaction:hover{display:inline!important;align-self:start;
+ margin:1px 0 0;padding:0;min-height:0;max-width:100%;
+ background:none;border:0;border-radius:0;font-weight:650;font-size:12px;
+ line-height:1.6;color:#a7ddff;text-decoration:underline;text-decoration-color:#6aa4d0;
+ text-underline-offset:3px;white-space:nowrap}
+#feed .operationRow .opTransaction::after{content:none!important;display:none!important}
+#feed .operationRow .opTransaction:focus-visible{outline:2px solid #bbe8ff;outline-offset:3px}
+#feed .operationRow .trendMini{width:52px;height:28px;flex:0 0 auto;overflow:visible}
+#feed .operationRow .trendLine{fill:none;stroke-width:2.7;stroke-linecap:round;
+ stroke-linejoin:round;stroke-dasharray:75;stroke-dashoffset:75;
+ animation:trendDraw 3.3s ease-in-out infinite}
+#feed .operationRow .trend-buy{color:#56ebac}
+#feed .operationRow .trend-sell{color:#ff899d}
+#feed .operationRow .trendLine{stroke:currentColor}
+#feed .operationRow .trendDot{fill:currentColor;animation:trendDotPulse 3.3s ease-in-out infinite}
+@keyframes trendDraw{0%,8%{stroke-dashoffset:75;opacity:.3}40%,83%{stroke-dashoffset:0;opacity:1}100%{stroke-dashoffset:75;opacity:.3}}
+@keyframes trendDotPulse{0%,25%{opacity:0}55%,84%{opacity:1}100%{opacity:0}}
+/* Animate Diamond Hands name/domain and honor in addition to the animated border. */
+#rank .diamondHands .walletAddress,
+#rank .diamondHands .rankHonor,
+#rank .diamondHands .domainBadge{
+ color:#e7dcff;background-image:linear-gradient(105deg,#f8fbff,#92e9ff,#f3b6ff,#ffe4a6,#b4ffd9,#e2d5ff);
+ background-size:340% 100%;background-position:0% 50%;
+ -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+ animation:gemLetters 6.5s linear infinite;
+ text-shadow:none;
+}
+#rank .diamondHands .rankHonor{background-color:#31455f;border-color:#e3d3ff99;box-shadow:0 0 8px #8b9eff22}
+#rank .diamondHands .domainBadge{box-shadow:inset 0 0 10px #cbb6ff44,0 0 7px #88baff22}
+@keyframes gemLetters{0%{background-position:0% 50%}100%{background-position:100% 50%}}
+#rank .rankingRow .serviceGear{display:inline-flex;align-items:center;justify-content:center;
+ width:23px;height:23px;line-height:1;font-size:15px;color:#d1e3f6;
+ background:#31455b;border:1px solid #68859d;border-radius:7px}
+#rank .rankingRow.diamondHands .serviceGear{border-color:#b0bee4}
+/* Brand glyphs: inline vectors / local token art; no external requests. */
+.brandGlyph{display:inline-flex;justify-content:center;align-items:center;vertical-align:middle;
+ width:22px;height:22px;min-width:22px;flex:0 0 22px;
+ border-radius:7px;background:#264562;color:#dceeff;
+ border:1px solid #527ca2;font:800 10px/1 system-ui,sans-serif;
+ letter-spacing:-.04em;text-decoration:none;overflow:hidden}
+.brandGlyph svg{width:17px;height:17px}
+.brandGlyph.brand-telegram{background:#1985be;color:#fff;border-color:#3aa9ea}
+.brandGlyph.brand-x{background:#0b0e14;color:#fff;border-color:#718398}
+.brandGlyph.brand-github{background:#252c3f;color:#fff}
+.brandGlyph.brand-ludoman{background:#182e4c url("__LUDOMAN_ART__") center/cover no-repeat;color:transparent}
+.brandGlyph.brand-ston{background:#19458a;color:#bfe7ff;border-color:#4ca6e9}
+.brandGlyph.brand-dedust{background:#5b4615;color:#ffe58c;border-color:#c59b31}
+.brandGlyph.brand-tonco{background:#175c47;color:#a7ffd8;border-color:#40b98f}
+.brandGlyph.brand-ton,.brandGlyph.brand-gram{background:#1b5a89;color:#e6f7ff;border-color:#49a5ea}
+.brandGlyph.brand-gecko{background:#306040;color:#ecffb3;border-color:#87ba65}
+.brandGlyph.brand-kito{background:#3a2854;color:#eddcff;border-color:#8660c0}
+.brandGlyph.brand-usdt{background:#17664e;color:#a7fbe0;border-color:#41be8d}
+.brandGlyph.brand-tonraffles,.brandGlyph.brand-jvault{background:#394576;border-color:#849bd2;color:#e7e9ff}
+.brandedLink{display:inline-flex!important;gap:7px;align-items:center;justify-content:center}
+#pools .poolCard h3{display:flex;gap:5px;align-items:center;flex-wrap:wrap;line-height:1.4}
+#pools .poolCard .brandGlyph{width:19px;height:19px;flex-basis:19px;font-size:9px}
+#pools .poolCard{position:relative;overflow:hidden;border-left-width:4px;
+ transition:border-color .18s,background .18s,transform .18s}
+#pools .poolCard.dex-dedust{background:linear-gradient(145deg,#3f371c,#2e3341)!important;
+ border-color:#8b783a;border-left-color:#edc452;color:#fff4d3}
+#pools .poolCard.dex-ston{background:linear-gradient(145deg,#1b365d,#243248)!important;
+ border-color:#4679b7;border-left-color:#5abaff;color:#d9f0ff}
+#pools .poolCard.dex-tonco{background:linear-gradient(145deg,#1c4b3c,#253b45)!important;
+ border-color:#4d987a;border-left-color:#64dcad;color:#e0fff1}
+#pools .poolCard.dex-mixed{background:linear-gradient(125deg,#403a28,#233e56)!important;
+ border-color:#607791;border-left-color:#a1c9b0}
+#pools .poolCard:not([class*="dex-"]){border-left:4px solid #617d97}
+#pools .poolLiquidity{font-weight:750;color:#d5f3ed!important}
+/* Money comes from market-cap estimation and current locked/staked source totals. */
+#supply .supplyGrid a{display:flex;flex-direction:column;gap:5px;background:#1b2d42;
+ border-color:#4a617d;padding:14px;border-radius:13px;min-width:0}
+#supply .supplyGrid strong{font-size:clamp(16px,2vw,20px);line-height:1.25;overflow-wrap:anywhere}
+#supply .supplyGrid .supplyUsd{color:#98e9c5;font-size:14px;font-weight:700}
+#supply .supplyGrid small:not(.supplyUsd){color:#bbd0e2}
+@media(max-width:1000px){
+ #nav{justify-content:space-between;grid-column:1/-1;gap:2px}
+ #nav a{flex:1 1 auto;min-width:0;padding:9px 5px;font-size:12px}
+}
+@media(max-width:590px){
+ #nav{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;
+ gap:4px;width:100%;overflow:visible!important}
+ #nav a{font-size:11px;min-height:36px;line-height:1.1;padding:7px 3px;white-space:normal}
+ #market,#activity,#wallets,#pools,#supply,#links{scroll-margin-top:175px}
+ #feed .operationRow{padding:10px 11px!important;gap:6px}
+ #feed .operationRow .opFooter{gap:8px}
+ #feed .operationRow .opTitleGroup{gap:7px}
+ #feed .operationRow .trendMini{width:40px;height:22px}
+ #feed .operationRow .opDate{font-size:10px}
+ #feed .operationRow .opTransaction{font-size:11px!important}
+ #feed .operationRow .opAmountValue{font-size:clamp(16px,4.25vw,20px)}
+ #pools .poolCard{padding:12px}
+ #supply .supplyGrid{grid-template-columns:repeat(2,minmax(0,1fr))}
+ #supply .supplyGrid strong{font-size:15px}
+}
+@media(max-width:360px){
+ #supply .supplyGrid{grid-template-columns:1fr}
+ #nav a{font-size:10.5px}
+ #feed .operationRow .opAmounts{grid-template-columns:minmax(0,1.35fr) minmax(0,1fr)}
+ #feed .operationRow .opAmountValue{font-size:16px}
+}
+@media(prefers-reduced-motion:reduce){
+ #feed .operationRow .trendLine,#feed .operationRow .trendDot,
+ #rank .diamondHands .walletAddress,#rank .diamondHands .rankHonor,
+ #rank .diamondHands .domainBadge{animation:none!important}
+ #feed .operationRow .trendLine{stroke-dashoffset:0}
+ #feed .operationRow .trendDot{opacity:1}
+}
+
+
+/* Contrast and alignment fixes from the real mobile screenshots. */
+#feed .operationRow .trendBase{fill:none;stroke:currentColor;stroke-width:2;
+ stroke-linecap:round;stroke-linejoin:round;opacity:.32}
+#rank .rankingRow .walletIdentity.serviceWallet{display:flex;flex-wrap:wrap;
+ align-items:flex-start;gap:4px 7px;min-width:0}
+#rank .rankingRow .walletIdentity.serviceWallet > .walletAddress{
+ flex:1 1 0;min-width:0;overflow-wrap:anywhere}
+#rank .rankingRow .walletIdentity.serviceWallet > .serviceGear{
+ flex:0 0 23px;margin-top:1px}
+#rank .rankingRow .walletIdentity.serviceWallet > .projectBadges{
+ flex:1 0 100%}
+#rank .rankingRow .diamondHonor{font-size:10px!important;padding:4px 7px!important;
+ white-space:nowrap;display:inline-flex;align-items:center;gap:4px}
+
+/* Observatory icon pack — local verified vector logos (offline only). */
+.brandGlyph img{display:block;width:18px;height:18px;object-fit:contain;filter:brightness(0) invert(1)}
+.brandGlyph.brand-github img{width:17px;height:17px}
+/* Owner-approved flags and token emblems retain full color (SVG glyphs still use existing fallback styles). */
+.brandGlyph.hasApprovedArtwork,.brandMark.hasApprovedArtwork{background-image:none!important}
+.brandGlyph.hasApprovedArtwork{background:transparent!important;border-color:transparent!important;box-shadow:none;padding:0;overflow:visible}
+.brandGlyph .brandTile,.brandMark .brandTile{display:block;width:100%;height:100%;flex:none;background-repeat:no-repeat;pointer-events:none}
+.brandGlyph .brandTile{border-radius:4px}
+.brandMark.hasApprovedArtwork{display:inline-flex;overflow:hidden}
+.brandMark .brandTile{border-radius:50%}
+.brandGlyph.brand-kito.hasApprovedArtwork{background:#d4e2f3!important;border:1px solid #92b1d7!important;border-radius:5px}
+
+/* Compact, full-color DEX emblems in trading-pool descriptions. */
+#pools .poolCard .dexMarks{display:inline-flex;align-items:center;vertical-align:middle;gap:3px;margin-right:2px}
+#pools .poolCard .dexMarks .brandGlyph{width:17px;height:17px;min-width:17px;flex:0 0 17px;border-radius:4px}
+
+/* Wallet-service logos belong to the guide, without changing the identity badges. */
+#wallets .badgeLegend dt .brandGlyph{width:17px;height:17px;min-width:17px;flex:0 0 17px;vertical-align:middle;margin-right:4px}
+
+/* LUDOMAN 2026 UX revision — approved icons, trading semantics and mobile polish. */
+.brandInline{display:inline-flex;align-items:center;gap:5px;vertical-align:middle;white-space:nowrap}
+.heroChain,.marketChain{display:flex;align-items:center;flex-wrap:wrap;column-gap:7px;row-gap:7px}
+.brandInline .brandGlyph{width:27px;height:27px;min-width:27px;flex:0 0 27px;border-radius:6px}
+.heroChain .brandGlyph,.marketChain .brandGlyph{width:29px;height:29px;min-width:29px;flex-basis:29px}
+.dexTag{display:inline-flex;align-items:center;gap:6px;flex-wrap:wrap;line-height:1.4}
+.dexTag .brandGlyph{width:24px;height:24px;min-width:24px;flex-basis:24px}
+.brandGlyph{width:28px;height:28px;min-width:28px;flex:0 0 28px;font-size:12px}
+.brandGlyph img{width:23px;height:23px;object-fit:contain}
+.brandGlyph svg{width:21px;height:21px}
+.brandGlyph .brandTile{border-radius:5px}
+#pools .poolCard h3 .brandGlyph{width:26px;height:26px;min-width:26px;flex:0 0 26px}
+#pools .poolCard .dexMarks .brandGlyph{width:23px;height:23px;min-width:23px;flex:0 0 23px}
+#pools .poolActions a{display:inline-flex;gap:8px;align-items:center;flex-wrap:nowrap}
+#pools .poolActions a .brandGlyph{width:24px;height:24px;min-width:24px;flex:0 0 24px}
+.introLinks a{gap:8px}
+.introLinks a .brandGlyph{width:27px;height:27px;min-width:27px;flex:0 0 27px}
+.hero .introLinks a[href^="https:"]::after{content:none!important;display:none!important}
+#links .resourceList{display:flex!important;flex-wrap:wrap;align-content:flex-start;align-items:flex-start;gap:9px}
+#links .resourceList>a,#links .resourceList>button{
+  display:inline-flex;align-items:center;justify-content:flex-start;gap:9px;
+  flex:0 1 auto;width:max-content;max-width:100%;min-height:48px;
+  padding:9px 12px;font-size:clamp(13px,1.5vw,15px);line-height:1.25;
+  overflow-wrap:anywhere;text-align:left
+}
+#links .resourceList>a .brandGlyph{width:30px;height:30px;min-width:30px;flex:0 0 30px}
+#links .resourceList>a::after{content:none!important;display:none!important}
+#links .resourcesGrid article{min-width:0}
+#links #contractAddress{font-size:12px;overflow-wrap:anywhere}
+#supply .supplyGrid a .brandGlyph{width:27px;height:27px;min-width:27px;flex:0 0 27px}
+#stats .statHeading{
+ display:flex;align-items:center;gap:9px;min-width:0;min-height:28px;
+ border:0;background:none;padding:0;color:#d7e8f9;
+ font-weight:750;line-height:1.3;white-space:normal
+}
+#stats .statHeading.buy{color:#81eac0}
+#stats .statHeading.sell{color:#ffacb4}
+#stats .statHeading.burn{color:#ffcb88}
+#stats .statHeading .trendMini{width:41px;height:22px}
+#stats .statHeading .statFire{font-size:22px;line-height:1;display:inline-block;
+ transform-origin:50% 90%;animation:statFireFlicker 1.8s ease-in-out infinite alternate}
+@keyframes statFireFlicker{
+ 0%{transform:rotate(-8deg) scale(.92);filter:brightness(.92)}
+ 55%{transform:rotate(5deg) scale(1.15);filter:brightness(1.15)}
+ 100%{transform:rotate(-2deg) scale(1.02);filter:brightness(1.3)}
+}
+.trendMini{width:45px;height:24px;flex:0 0 auto;overflow:visible}
+.trendMini.trend-buy{color:#56ebac}
+.trendMini.trend-sell{color:#ff899d}
+.trendMini .trendBase,.trendMini .trendLine,.trendMini .trendArrow{
+ fill:none;stroke:currentColor;stroke-linecap:round;stroke-linejoin:round
+}
+.trendMini .trendBase{stroke-width:1.9;opacity:.27}
+.trendMini .trendLine{stroke-width:2.6;stroke-dasharray:75;stroke-dashoffset:75;
+ animation:trendDraw 3.3s ease-in-out infinite}
+.trendMini .trendArrow{stroke-width:2.9;opacity:0;
+ animation:trendArrowReveal 3.3s ease-in-out infinite}
+@keyframes trendArrowReveal{
+ 0%,25%{opacity:0;stroke-dasharray:20;stroke-dashoffset:20}
+ 43%,83%{opacity:1;stroke-dasharray:20;stroke-dashoffset:0}
+ 100%{opacity:0;stroke-dashoffset:20}
+}
+#feed .operationRow{position:relative;isolation:isolate;overflow:hidden}
+#feed .operationRow .operationWatermark{
+ position:absolute;inset:0;display:grid;grid-template-columns:repeat(3,1fr);
+ grid-template-rows:repeat(2,1fr);align-items:center;justify-items:center;
+ pointer-events:none;z-index:0;transform:rotate(-12deg) scale(1.06);opacity:.18
+}
+#feed .operationRow .operationWatermark .brandGlyph{
+ display:block;width:46px;height:46px;min-width:46px;flex:none;
+ border:0;border-radius:7px;background:none;box-shadow:none;
+}
+#feed .operationRow .operationWatermark .brandTile{border-radius:7px}
+#feed .operationRow >:not(.operationWatermark){position:relative;z-index:1}
+#feed .operationRow .trendMini{width:43px;height:23px}
+#rank .rankingRow.bestSellers{
+ position:relative;isolation:isolate;overflow:hidden;border:2px solid transparent;
+ background:linear-gradient(#192d3a,#192d3a) padding-box,
+ linear-gradient(105deg,#247986,#82d7b1,#5472c6,#247986) border-box;
+ background-size:100% 100%,330% 330%;animation:bestSellerBorder 9s linear infinite
+}
+#rank .rankingRow.bestSellers::before{
+ content:"⇄  ↗   ⇄  ↘   ↗   ⇄   ↘   ⇄   ↗   ⇄";
+ position:absolute;inset:0;overflow:hidden;word-break:break-all;
+ font:750 23px/1.8 system-ui,sans-serif;letter-spacing:17px;
+ color:#80decd;opacity:.13;pointer-events:none;
+ transform:rotate(-8deg) scale(1.12);
+ animation:bestSellerFlow 8s ease-in-out infinite alternate;
+ z-index:0
+}
+#rank .rankingRow.bestSellers > div{position:relative;z-index:1;min-width:0}
+#rank .bestHonor{
+ color:#dffff7;background:linear-gradient(115deg,#115467,#20634a);
+ border:1px solid #82d7b1a8;font-weight:800;white-space:nowrap
+}
+@keyframes bestSellerBorder{from{background-position:0 0,0% 50%}to{background-position:0 0,100% 50%}}
+@keyframes bestSellerFlow{from{transform:rotate(-8deg) translateX(-9px) scale(1.12)}to{transform:rotate(-8deg) translateX(11px) scale(1.12)}}
+#views{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:5px}
+#views button{min-width:0;padding:10px 5px;white-space:normal;line-height:1.3}
+#wallets .badgeLegend dl{grid-template-columns:minmax(94px,auto) 1fr;gap:8px 10px}
+#wallets .badgeLegend dt{display:flex;align-items:center;gap:6px;min-width:0}
+#wallets .badgeLegend dt .badgePreview{
+ display:inline-flex;align-items:center;justify-content:center;
+ flex:0 0 auto;min-width:31px;min-height:28px;
+ padding:3px 5px;margin:0;overflow:visible
+}
+#wallets .badgeLegend dt .badgePreview img{width:23px;height:23px;object-fit:contain}
+#wallets .badgeLegend dt .badgePreview .beerIcon{width:24px;height:24px}
+#wallets .badgeLegend dt .brandGlyph{width:24px;height:24px;min-width:24px;flex:0 0 24px}
+@media(max-width:590px){
+ #nav a{min-height:45px;line-height:1.2;padding:7px 4px;font-size:10.5px}
+ .marketChain{font-size:10.5px;column-gap:5px}
+ .heroChain .brandGlyph,.marketChain .brandGlyph{width:24px;height:24px;min-width:24px;flex-basis:24px}
+ #activity .sectionHeading{display:flex;flex-wrap:wrap;gap:8px}
+ .dexTag{font-size:12px}
+ #stats .statHeading{gap:5px;font-size:12px}
+ #stats .statHeading .trendMini{width:32px;height:18px}
+ #feed .operationRow .trendMini{width:37px;height:20px}
+ #links .resourcesGrid{grid-template-columns:minmax(0,1fr)}
+ #links .resourceList>a,#links .resourceList>button{font-size:13px;padding:8px 10px;min-height:46px}
+ #wallets .badgeLegend dl{grid-template-columns:minmax(86px,auto) minmax(0,1fr);gap:8px}
+ #wallets .badgeLegend dt{font-size:11px;flex-wrap:wrap}
+ #wallets .badgeLegend dt .badgePreview{min-width:29px}
+ #views button{font-size:11px;padding:9px 3px}
+}
+@media(prefers-reduced-motion:reduce){
+ #stats .statFire,.trendMini .trendLine,.trendMini .trendArrow,
+ #rank .rankingRow.bestSellers,#rank .rankingRow.bestSellers::before{animation:none!important}
+ .trendMini .trendLine{stroke-dashoffset:0!important}
+ .trendMini .trendArrow{opacity:1!important;stroke-dashoffset:0!important}
+}

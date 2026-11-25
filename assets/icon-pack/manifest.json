@@ -1,0 +1,133 @@
+{
+  "schema": 1,
+  "version": "0.1.0",
+  "assets": [
+    {
+      "id": "telegram",
+      "file": "brands/telegram.svg",
+      "provider": "Simple Icons",
+      "license": "CC0",
+      "url": "https://github.com/simple-icons/simple-icons/blob/develop/icons/telegram.svg",
+      "type": "brand",
+      "authenticity": "repository-source-verified, not an official brand-kit export"
+    },
+    {
+      "id": "x",
+      "file": "brands/x.svg",
+      "provider": "Simple Icons",
+      "license": "CC0",
+      "url": "https://github.com/simple-icons/simple-icons/blob/develop/icons/x.svg",
+      "type": "brand",
+      "authenticity": "repository-source-verified, not an official brand-kit export"
+    },
+    {
+      "id": "usdt",
+      "file": "brands/usdt.svg",
+      "provider": "Simple Icons (Tether)",
+      "license": "CC0",
+      "url": "https://github.com/simple-icons/simple-icons/blob/develop/icons/tether.svg",
+      "type": "brand",
+      "authenticity": "repository-source-verified, not an official brand-kit export"
+    },
+    {
+      "id": "ton",
+      "file": "brands/ton.svg",
+      "provider": "Simple Icons (TON network)",
+      "license": "CC0",
+      "url": "https://github.com/simple-icons/simple-icons/blob/develop/icons/ton.svg",
+      "type": "brand",
+      "authenticity": "repository-source-verified, not an official brand-kit export"
+    },
+    {
+      "id": "github",
+      "file": "brands/github.svg",
+      "provider": "GitHub Primer Octicons",
+      "license": "MIT",
+      "url": "https://github.com/primer/octicons/blob/main/icons/mark-github-16.svg",
+      "type": "brand",
+      "authenticity": "repository-source-verified, not an official brand-kit export"
+    },
+    {
+      "id": "search",
+      "file": "ui/search.svg",
+      "provider": "Lucide",
+      "license": "ISC",
+      "url": "https://github.com/lucide-icons/lucide/blob/main/icons/search.svg",
+      "type": "ui",
+      "authenticity": "open-source UI icon, not extracted from Figma"
+    },
+    {
+      "id": "settings",
+      "file": "ui/settings.svg",
+      "provider": "Lucide",
+      "license": "ISC",
+      "url": "https://github.com/lucide-icons/lucide/blob/main/icons/settings.svg",
+      "type": "ui",
+      "authenticity": "open-source UI icon, not extracted from Figma"
+    },
+    {
+      "id": "list-filter",
+      "file": "ui/list-filter.svg",
+      "provider": "Lucide",
+      "license": "ISC",
+      "url": "https://github.com/lucide-icons/lucide/blob/main/icons/list-filter.svg",
+      "type": "ui",
+      "authenticity": "open-source UI icon, not extracted from Figma"
+    },
+    {
+      "id": "snowflake",
+      "file": "ui/snowflake.svg",
+      "provider": "Lucide",
+      "license": "ISC",
+      "url": "https://github.com/lucide-icons/lucide/blob/main/icons/snowflake.svg",
+      "type": "ui",
+      "authenticity": "open-source UI icon, not extracted from Figma"
+    },
+    {
+      "id": "lock",
+      "file": "ui/lock.svg",
+      "provider": "Lucide",
+      "license": "ISC",
+      "url": "https://github.com/lucide-icons/lucide/blob/main/icons/lock.svg",
+      "type": "ui",
+      "authenticity": "open-source UI icon, not extracted from Figma"
+    },
+    {
+      "id": "arrow-left-right",
+      "file": "ui/arrow-left-right.svg",
+      "provider": "Lucide",
+      "license": "ISC",
+      "url": "https://github.com/lucide-icons/lucide/blob/main/icons/arrow-left-right.svg",
+      "type": "ui",
+      "authenticity": "open-source UI icon, not extracted from Figma"
+    },
+    {
+      "id": "chart-no-axes-combined",
+      "file": "ui/chart-no-axes-combined.svg",
+      "provider": "Lucide",
+      "license": "ISC",
+      "url": "https://github.com/lucide-icons/lucide/blob/main/icons/chart-no-axes-combined.svg",
+      "type": "ui",
+      "authenticity": "open-source UI icon, not extracted from Figma"
+    },
+    {
+      "id": "trophy",
+      "file": "ui/trophy.svg",
+      "provider": "Lucide",
+      "license": "ISC",
+      "url": "https://github.com/lucide-icons/lucide/blob/main/icons/trophy.svg",
+      "type": "ui",
+      "authenticity": "open-source UI icon, not extracted from Figma"
+    },
+    {
+      "id": "external-link",
+      "file": "ui/external-link.svg",
+      "provider": "Lucide",
+      "license": "ISC",
+      "url": "https://github.com/lucide-icons/lucide/blob/main/icons/external-link.svg",
+      "type": "ui",
+      "authenticity": "open-source UI icon, not extracted from Figma"
+    }
+  ],
+  "pending": []
+}

@@ -1,0 +1,18 @@
+{
+  "schema": 1,
+  "files": {
+    "assets.py": "4209e9c017b22ef3974edbb5c366ee9149b3d569fa4ab8698cf90eef12390186",
+    "badges.py": "10bc6e049a24d1cdd1baab44b7956b7aa5e54afd18bc732d78ef331586bbd0fb",
+    "collect.py": "f270d3b0b20e7aa5204140161738d4b044f941761c15f78e8a679fa5fd2d73f7",
+    "observatory.py": "e8b73e29b2d936d9ab7c407ea6014e12cece77649f466e6120d40eae3a91283a",
+    "pools.py": "0127ceb70c1834c1a59fec04445d5490bb6725fc81df72f4557777733a0cb7ed",
+    "trades.py": "387b37599ddd22ceeac8ecf03092798608bff4fbb39ace67d927b20bf435be88",
+    "verify.py": "3df35c5e0ecfcd56cbbaa77d9b2396c947fc10ff357e53f4469a8ad5c3c882ae",
+    "web/app.js": "0c6fb94eb16eff1f646614d8c5a02c3810dd739f5b2068ee6c21ddd559d0cb77",
+    "web/market-cap.js": "ef0fa9743ed5c7c795ba8e728c1a7a384ad26604ec1c6b1025ce61a07b4b333a",
+    "web/page.html": "f395e70e3c06a0f110b5696bfc3124601a329bbe4bdc7fe58a46d79f5faddb6a",
+    "web/snapshot-loader.js": "001a0b0b608e31ee90ca5bb86c9646cd243e30d8b92426738dc2d85fb4b15dde",
+    "web/style.css": "b38155e1c1fe8b8f3d7fcda52fae40e035c88f8528b9abebcb421f308c1210c0",
+    "web/telegram-taste.css": "973800b85845842dce9a5e3825b9cc26ad21a16f4f3a7d018b562041987e483b"
+  }
+}
