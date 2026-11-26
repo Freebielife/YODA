@@ -1,4 +1,4 @@
-"""Safely publish Ludoman's generated snapshot and HTML after collection.
+"""Safely publish Baby Yoda's generated snapshot and HTML after collection.
 
 GitHub Actions jobs can run for several minutes. Another commit on main during
 collection would otherwise cause a non-fast-forward git push rejection. Rebase
@@ -37,7 +37,7 @@ def publish(root: Path, branch: str = "main", retries: int = 3) -> None:
     if command(root, "git", "diff", "--cached", "--quiet", allow_failure=True).returncode == 0:
         print("No changed snapshot or page; nothing to publish", flush=True)
         return
-    command(root, "git", "commit", "-m", "Refresh LUDOMAN snapshot")
+    command(root, "git", "commit", "-m", "Refresh YODA snapshot")
 
     for attempt in range(1, retries + 1):
         print(f"Publishing snapshot (attempt {attempt}/{retries})", flush=True)
@@ -59,10 +59,10 @@ def publish(root: Path, branch: str = "main", retries: int = 3) -> None:
             command(root, sys.executable, "verify.py")
             command(root, "git", "add", "--", "index.html")
             if command(root, "git", "diff", "--cached", "--quiet", allow_failure=True).returncode != 0:
-                command(root, "git", "commit", "-m", "Rebuild LUDOMAN page after upstream changes")
+                command(root, "git", "commit", "-m", "Rebuild YODA page after upstream changes")
         push = command(root, "git", "push", "origin", "HEAD:refs/heads/main", allow_failure=True)
         if push.returncode == 0:
-            print("Published fresh Ludoman snapshot to main", flush=True)
+            print("Published fresh Baby Yoda snapshot to main", flush=True)
             return
         print("Remote branch advanced during push; retrying with fetch/rebase", flush=True)
         if attempt < retries:

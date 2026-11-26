@@ -20,6 +20,7 @@ import trades
 import trade_history
 import badges
 import domains
+from scripts.project_runtime import read_project, check_identity, decorate_snapshot
 
 ROOT = Path(__file__).resolve().parents[1]
 SNAPSHOT = ROOT / "data/snapshot.json"
@@ -27,6 +28,9 @@ UNINDEXED = {"burns", "zeroBurns", "domains", "fragmentNumbers"}
 
 
 def save(snapshot: dict) -> None:
+    project = read_project(ROOT)
+    check_identity(snapshot, project)
+    decorate_snapshot(snapshot, project)
     SNAPSHOT.parent.mkdir(parents=True, exist_ok=True)
     temp = SNAPSHOT.with_suffix(".tmp")
     temp.write_text(json.dumps(snapshot, ensure_ascii=False, separators=(",", ":"),
@@ -39,11 +43,13 @@ def refresh() -> dict:
     snap = json.loads(SNAPSHOT.read_text(encoding="utf-8"))
     if snap.get("schema") != 1 or snap.get("token") != assets.MASTER:
         raise ValueError("Generated token identity or snapshot schema mismatch")
+    check_identity(snap, read_project(ROOT))
     errors = set(snap.get("errors", ()))
     errors.update(key for key in UNINDEXED if key not in snap)
 
     def stage(key, read, *, interval=0):
         prior = snap.get(key, {})
+        snap.setdefault("refreshStatus", {})[key] = {"attemptedAt": now, "ok": None}
         if prior and now - int(prior.get("asOf", 0)) < interval:
             return
         try:
@@ -56,13 +62,18 @@ def refresh() -> dict:
                 rec.get("checked") for rec in result.get("byWallet", {}).values()):
                 raise ValueError("No verified account identities yet")
             snap[key] = result
-            errors.discard(key)
+            if key == "badges" and result.get("failed"):
+                errors.add(key)
+            else:
+                errors.discard(key)
             snap["updated"] = int(time.time())
             snap["errors"] = sorted(errors)
+            snap["refreshStatus"][key].update(ok=key not in errors, lastSuccess=result["asOf"])
             save(snap)
             print(key, "SAVED", flush=True)
         except (OSError, ValueError, KeyError, TypeError, RuntimeError) as exc:
             errors.add(key)
+            snap["refreshStatus"][key].update(ok=False, error=type(exc).__name__, lastSuccess=prior.get("asOf"))
             snap["errors"] = sorted(errors)
             print(key, "UNAVAILABLE", type(exc).__name__, str(exc)[:200], flush=True)
 

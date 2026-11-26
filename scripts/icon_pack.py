@@ -39,6 +39,8 @@ def load_pack(root: Path=PACK_ROOT)->dict[str,str]:
 
 def load_brand_atlas(root: Path=PACK_ROOT)->dict:
     """Load the owner-approved static emoji atlas, validating it before embedding."""
+    if not (root/"approved-brand-atlas.json").exists():
+        return {"image":"","cols":0,"rows":0,"positions":{}}
     data=json.loads((root/"approved-brand-atlas.json").read_text())
     rows,cols=data["rows"],data["columns"]
     if not isinstance(rows,int) or not isinstance(cols,int) or not (1<rows<=8 and 1<cols<=8):

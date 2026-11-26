@@ -1,7 +1,7 @@
 const {test}=require('node:test');
 const assert=require('node:assert/strict');
-const {createSnapshotLoader}=require('../reference/web/snapshot-loader.js');
-const base={schema:1,token:"LUDOMAN",updated:1000,rates:{asOf:1000,rows:[]},trades:{asOf:1000,rows:[]},burns:{asOf:1000,rows:[]},holders:{asOf:1000,holders:[],totalSupply:'100'},domains:{asOf:1000,byWallet:{}}};
+const {createSnapshotLoader}=require('../web/snapshot-loader.js');
+const base={schema:1,token:"YODA",updated:1000,rates:{asOf:1000,rows:[]},trades:{asOf:1000,rows:[]},burns:{asOf:1000,rows:[]},holders:{asOf:1000,holders:[],totalSupply:'100'},domains:{asOf:1000,byWallet:{}}};
 function fixture(fetchImpl,options={}){
  let data=structuredClone(base),states=[];
  const refresh=createSnapshotLoader({fetchImpl,getSnapshot:()=>data,applySnapshot:s=>{data=s},onState:s=>states.push(s),retryDelayMs:0,timeoutMs:30,...options});

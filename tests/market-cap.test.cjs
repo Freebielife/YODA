@@ -1,7 +1,7 @@
 const {test}=require('node:test');
 const assert=require('node:assert/strict');
-const {marketCapSeries}=require('../reference/web/market-cap.js');
-const row=(time,ludoman,ton=1)=>({time,ludoman:String(ludoman),ton:String(ton),tx:String(time),kind:'buy'});
+const {marketCapSeries}=require('../web/market-cap.js');
+const row=(time,project,ton=1)=>({pool:"EQBjBklMBO8hh8cFSeyVNB0GEimYOO9IZ6WDLXjuL45Dsbxu",time,tokenAmount:String(project),ton:String(ton),tx:String(time),kind:'buy'});
 const snapshot=rows=>({holders:{totalSupply:'1000000'},trades:{asOf:200,since:1,rows}});
 test('fewer tokens per TON raises valuation; baseline uses the last earlier trade',()=>{
  const d=marketCapSeries(snapshot([row(190,50),row(90,100)]),100);
@@ -27,11 +27,11 @@ test('historical estimate deliberately uses the supplied current total supply',(
  const s=snapshot([row(90,100),row(190,50)]);const a=marketCapSeries(s,100);s.holders.totalSupply='500000';const b=marketCapSeries(s,100);
  assert.equal(b.latestCap,a.latestCap/2);assert.equal(b.change,a.change);
 });
-test('USD uses the applicable historical rate and filters out DeDust prices',()=>{
+test('USD uses the applicable historical rate and filters other pool prices',()=>{
  const s=snapshot([
   {...row(90,100),dex:'STON.fi'},
   {...row(170,50),dex:'STON.fi'},
-  {...row(190,10),dex:'DeDust'}
+  {...row(190,10),dex:'DeDust',pool:'other-pool'}
  ]);
  s.rates={rows:[[80,2],[150,3],[180,4]]};
  const d=marketCapSeries(s,100,60,'USD');
@@ -39,7 +39,7 @@ test('USD uses the applicable historical rate and filters out DeDust prices',()=
  assert.equal(d.latestCap,80000);
  assert.equal(d.change,300);
 });
-test('USD stays empty without rates and GRAM remains available',()=>{
+test('USD stays empty without rates and TON remains available',()=>{
  const s=snapshot([row(190,100)]);
  assert.equal(marketCapSeries(s,100,60,'USD').latestCap,null);
  assert.equal(marketCapSeries(s,100).latestCap,10000);

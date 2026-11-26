@@ -1,102 +1,46 @@
-# TON Observatory Template
+# Baby Yoda Observatory
 
-Общая основа для создания обсерваторий токенов TON. **Это отдельный репозиторий,
-который не читает исходники, настройки или данные из работающего Ludoman.**
-Ludoman можно развивать независимо. Его DEV-кошелёк и специальные NFT/стейкинг-метки
-не входят в настройки новых проектов.
+## О проекте / токене
 
-Версия основы: **1.3.0**. Правила работы: [AGENTS.md](AGENTS.md).
+Baby Yoda coin was born out of Egor's creativity and the imagination of the Telegram community. Its arrival resonates deeply with crypto enthusiasts, demonstrating the substantial impact even a modest token could have in the expansive world of blockchain.
 
-## Создание нового проекта
+Самоописание из метаданных токена; заявления проекта не проверены независимо.
 
-Нужны контракт токена, репозиторий, выбранный флаг и канал проекта. Логотип
-первой карточки берётся из метаданных токена или с указанного сайта проекта.
-Если чего-то не хватает, сначала уточняем нужные сведения, не выдумываем их.
-В README каждого репозитория добавляется описание проекта/токена со ссылками
-на первичные источники и датой проверки. Самоописание из метаданных отмечается
-отдельно. Правила и формат: [описания проектов](docs/PROJECT_DESCRIPTIONS.md).
+Источники (проверены 2026-11-26):
 
-```bash
-python3 -m pip install -r requirements.txt
-python3 -m scripts.discover_project \
-  --token TOKEN_CONTRACT \
-  --github OWNER/NEW_REPOSITORY \
-  --channel https://t.me/PROJECT_CHANNEL \
-  --flag-file /absolute/path/to/approved-token-emoji.webp \
-  --output /absolute/path/to/new-observatory
-```
+- <https://tonapi.io/v2/jettons/EQC7vuKEYLdC72YhUWt3AUVA-Oi66Q1DxTHXH7r6pXaV50j7>
 
-`--website https://PROJECT_WEBSITE` задаёт официальный сайт для резервного поиска
-логотипа. Вместо `--flag-file` можно явно выбрать `--flag-key` из подготовленного
-каталога или `--flag-emoji`. Каталог соответствий проверяется отдельно: отсутствие
-картинки в локальном атласе не означает отсутствие флага в полном TONecoFlags.
+Generated from https://github.com/Freebielife/TON-Observatory-Template.
 
-Команда определяет метаданные, ищет поддерживаемые пулы с успешными обменами,
-создаёт отдельный проект, собирает данные и проверяет самостоятельный `index.html`.
-`--prepare-only` создаёт исходники без запросов сбора истории и сборки HTML.
-`--description-file /path/to/description.json` задаёт описание по изученным
-официальным источникам. Без него используется содержательное самоописание из
-метаданных; при отсутствии описания README явно сообщает об этом.
-Для заранее проверенной конфигурации:
+Run python3 -m scripts.refresh_observatory; python3 build.py; python3 verify.py.
+Publish index.html in TON Sites only after independent on-chain verification.
+The snapshot contains only data returned by collectors; unavailable sections remain explicitly marked.
+Only native TON swap pairs supported. Locks, staking and custom project NFT badges are configured through project.json and verified against TonAPI.
+GitHub Actions update workflow: `.github/workflows/update.yml`. Existing shared Cloudflare scheduler is managed externally; live dispatch is verified separately.
 
-```bash
-python3 -m scripts.scaffold_observatory --config /path/to/project.json --output /path/to/new-observatory
-```
+Foundation version: 1.3.0. Holders show 10, expandable to top 20.
+`project.json` is the per-project specification. Contract/pool/precision changes require regenerating from the factory; do not reuse another token's snapshot.
+Run `python3 build.py` for an atomic bundle and `build/report.json` size report.
+No external fonts, scripts or images are needed to render the saved page. Fresh data checks and manual wallet lookups require network access.
+Cloudflare dispatch registration and GitHub repository access remain separate deployment steps. No credentials go into HTML.
 
-Каждый созданный проект содержит собственные исходники и данные. Генератор
-отказывается перезаписывать непустой каталог. Корень шаблона не является сайтом
-токена: сюда не загружаются рыночные снимки и не запускается обновление Ludoman.
+## YODA configuration
 
-## Что входит
+Contract: `0:bbbee28460b742ef6621516b77014540f8e8bae90d43c531d71fbafaa57695e7`. Decimals: 9. Metadata symbol: `Yoda`; UI symbol: `YODA`.
 
-- Один HTML для Resistance Tools / TON Storage, RU/EN и мобильное отображение.
-- Покупки, продажи, сжигания, график оценки капитализации и торговые пулы.
-- 10 холдеров при открытии, раскрытие до топ-20; отдельные сервисы и контракты.
-- Общие метки OG, Fragment +888, четырёхзначные .ton и сжигания.
-- Справочник Tonkeeper и дополнительные адресные метки с указанными источниками.
-- Сохранение исправных данных при сбоях, статусы разделов, накопление истории.
-- Проверка токена/пулов, атомарная сборка, контроль размера HTML и версия основы.
-- Независимые логотип первого блока и флаг остальных разделов; канал в двух блоках.
+Foundation: 1.3.0, canonical template commit `65780137fa12eda7500f48d29c5b261411305274`.
+Hero: user-supplied `image(20261125-173946).png`, used by explicit instruction instead of the metadata image. Provenance is recorded in project.json. Section flag: user-selected TONecoFlags #193, independently embedded.
 
-Автоматический сбор сделок сейчас поддерживает прямые пары с TON на STON.fi и
-DeDust. Иные пары могут отображаться в списке пулов, но их операции не заявляются
-как покрытые общей лентой. Для специальных меток используются отдельные настройки.
+Verified on 2026-11-26: exact token metadata and successful native TON swaps via TonAPI; pool discovery through GeckoTerminal. Primary chart source is the largest indexed supported swap-verified TON pool. Other quote tokens and unsupported DEX versions are outside the trade feed.
 
-## Публикация и обновления
+Project links from exact-contract metadata:
 
-1. Создать проект и проверить данные, ссылки, флаги и мобильное отображение.
-2. Сохранить его в собственном репозитории. Убедиться, что снимок загружается из него.
-3. Проверить ручной GitHub Actions и подключить репозиторий к существующему
-   Cloudflare-планировщику с интервалом 30 минут и правами GitHub-токена.
-4. Опубликовать проверенный `index.html` через согласованный TON Storage / RT.
-5. Отдельно подтвердить, что опубликована нужная версия и обновления действительно работают.
+- https://babyyoda.lol
+- https://t.me/BabyYodaTONCHAIN
+- https://x.com/yodaonton
 
-Создание шаблона не развёртывает Worker, не создаёт секреты, не изменяет DNS и не
-публикует TON Storage bag. Исходник планировщика и **пустой пример реестра** находятся
-в [infrastructure/cloudflare-runner](infrastructure/cloudflare-runner). Рабочий
-планировщик существующих сайтов продолжает работать независимо; перед его
-обновлением необходимо сохранить полный действующий список репозиториев.
+The saved HTML embeds interface scripts and images, with no external fonts. Fresh snapshots and wallet lookups need network access. Publication in main does not itself publish a TON Storage bag.
 
-## Независимость от Ludoman
+Link check on 2026-11-26: project website, configured DeDust/STON.fi pool pages and the gram.org token page returned HTTP 200. Telegram and X returned HTTP 403 from this environment, so their contents were not independently verified; their URLs match the exact-contract metadata.
 
-`reference/` содержит локально зафиксированные заготовки интерфейса и коллекторов.
-Исторические названия внутри них — маркеры для преобразования генератором.
-Они не являются настройками нового токена. Эти файлы не нужно публиковать как сайт.
-Генератор читает только локальные заготовки; их хеши проверяются по
-`REFERENCE_MANIFEST.json`. Источник переноса указан в `ORIGIN.json` только для
-истории происхождения и никогда не загружается при создании сайта.
-
-## Проверки
-
-```bash
-python3 -m scripts.check_reference
-python3 -m unittest discover -s tests -t . -p 'test_*.py'
-node --test tests/*.test.cjs
-node --test infrastructure/cloudflare-runner/tests/*.test.mjs
-```
-
-CI выполняет проверки без секретов и сбора рыночных данных. Синтетические адреса и
-изображения в тестах — тестовые примеры, их нельзя выдавать за реальные данные.
-
-Подробнее: [оформление](docs/BRANDING_STANDARD.md),
-[данные и сборка](docs/FOUNDATION_V1.md), [порядок работы](docs/PROJECT_WORKFLOW.md).
+Activity shows 20 rows, expandable to 50. Holders show 10, expandable to 20.

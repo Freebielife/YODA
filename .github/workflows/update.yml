@@ -1,0 +1,44 @@
+name: Update TON observatory
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '*.py'
+      - 'web/**'
+      - 'scripts/**'
+      - 'tests/**'
+      - 'project.json'
+      - 'common-services.json'
+      - '.github/workflows/update.yml'
+permissions:
+  contents: write
+concurrency:
+  group: observatory-data
+  cancel-in-progress: false
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 20
+      - name: Validate engine
+        run: |
+          python3 -m unittest discover -s tests -p "test_*.py"
+          node --check web/app.js
+          node --test tests/*.test.cjs
+      - name: Collect on-chain data
+        id: collect
+        continue-on-error: true
+        run: python3 -m scripts.refresh_observatory
+      - name: Build and publish verified snapshot
+        run: |
+          python3 build.py
+          python3 verify.py
+          python3 scripts/publish_snapshot.py
+      - name: Report partial collection
+        if: steps.collect.outcome == 'failure'
+        run: exit 1

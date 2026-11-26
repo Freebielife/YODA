@@ -1,12 +1,15 @@
-# TON Observatory Template — canonical shared source
+# YODA Observatory — project instructions
 
-This repository is the canonical basis for future observatories. Do not read or
-clone Freebielife/Ludoman to generate a new site. Use only this repository's local
-reference/ files, scripts, shared registry and tests. Ludoman is an independent
-project and may be changed without migrating its customizations here.
+This repository is the generated Baby Yoda observatory. Its canonical factory is
+Freebielife/TON-Observatory-Template, version 1.3.0. Token identity, selected pools,
+links and branding provenance are in project.json. Do not use this project's
+snapshot as seed data for another token. Do not clone or modify Ludoman to build
+this site. The original template state is retained in Git history.
 
 Before creating a site:
-- Read docs/BRANDING_STANDARD.md and docs/PROJECT_WORKFLOW.md.
+- Read docs/BRANDING_STANDARD.md and docs/PROJECT_WORKFLOW.md. The user explicitly
+  selected image(20261125-173946).png for this site's hero, overriding the default
+  metadata-logo rule. Keep that attachment and section flag #193 separate.
 - Gather contract, repository, metadata/site logo with source, explicitly selected
   section flag and project Telegram channel. Find verifiable inputs independently;
   ask only for missing essential inputs. Never invent a channel or flag mapping.

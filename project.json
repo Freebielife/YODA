@@ -1,0 +1,106 @@
+{
+  "slug": "yoda",
+  "name": "Baby Yoda",
+  "symbol": "YODA",
+  "master": "EQC7vuKEYLdC72YhUWt3AUVA-Oi66Q1DxTHXH7r6pXaV50j7",
+  "decimals": 9,
+  "github": {
+    "owner": "Freebielife",
+    "repo": "YODA"
+  },
+  "pools": [
+    {
+      "address": "EQBjBklMBO8hh8cFSeyVNB0GEimYOO9IZ6WDLXjuL45Dsbxu",
+      "dex": "dedust",
+      "quote": "TON",
+      "evidence": "https://tonapi.io/v2/accounts/EQBjBklMBO8hh8cFSeyVNB0GEimYOO9IZ6WDLXjuL45Dsbxu/events?limit=100"
+    },
+    {
+      "address": "EQBsuH6e_L2bxrujhsbL6lridBUPkwEE_ylAPrVpjftZ9QNi",
+      "dex": "stonfi",
+      "quote": "TON",
+      "evidence": "https://tonapi.io/v2/accounts/EQBsuH6e_L2bxrujhsbL6lridBUPkwEE_ylAPrVpjftZ9QNi/events?limit=100"
+    }
+  ],
+  "primary_pool": "EQBjBklMBO8hh8cFSeyVNB0GEimYOO9IZ6WDLXjuL45Dsbxu",
+  "links": {
+    "telegram": "https://t.me/BabyYodaTONCHAIN",
+    "x": "https://x.com/yodaonton",
+    "website": "https://babyyoda.lol"
+  },
+  "services": {
+    "UQD4uGNdB4a3f52mYOZf0x1nCmdd1DAvrLppL0a1cetTYCQx": "Binance",
+    "EQDPfqI17W9lF-3OmAJu92GOn22BoTMdTmW6cY4s0V-ArRRY": "Bybit"
+  },
+  "engine_version": "1.3.0",
+  "discovery": {
+    "checkedAt": 1795665554,
+    "sources": [
+      "https://tonapi.io/v2/jettons/EQC7vuKEYLdC72YhUWt3AUVA-Oi66Q1DxTHXH7r6pXaV50j7",
+      "https://api.geckoterminal.com/api/v2/networks/ton/tokens/EQC7vuKEYLdC72YhUWt3AUVA-Oi66Q1DxTHXH7r6pXaV50j7/pools?page=1"
+    ],
+    "primaryPoolPolicy": "largest indexed USD liquidity among swap-verified supported TON pools"
+  },
+  "project_description": {
+    "text": "Baby Yoda coin was born out of Egor's creativity and the imagination of the Telegram community. Its arrival resonates deeply with crypto enthusiasts, demonstrating the substantial impact even a modest token could have in the expansive world of blockchain.",
+    "origin": "token_metadata",
+    "sources": [
+      "https://tonapi.io/v2/jettons/EQC7vuKEYLdC72YhUWt3AUVA-Oi66Q1DxTHXH7r6pXaV50j7"
+    ],
+    "checked_at": "2026-11-26"
+  },
+  "logo_file": "web/project-logo.webp",
+  "logo_origin": "user_attachment",
+  "logo_source": "https://chatgpt.com/library?file_id=libfile_06b3733473688191823e177b867dfb39&account_id=personal",
+  "flag_file": "web/project-flag.webp",
+  "flag_source": "TONecoFlags #193, explicitly selected by user; numbered-catalog thumbs/193.png",
+  "metadata_symbol": "Yoda",
+  "hero_provenance": {
+    "origin": "user_attachment",
+    "library_file_id": "libfile_06b3733473688191823e177b867dfb39",
+    "filename": "image(20261125-173946).png",
+    "note": "Explicit user override for hero; supplied image used instead of remote metadata logo.",
+    "original_sha256": "27fced7b03ba208279e9252748554c78996b522c90a20a73ad8ee06e4f172229"
+  },
+  "service_provenance": {
+    "0:f8b8635d0786b77f9da660e65fd31d670a675dd4302facba692f46b571eb5360": {
+      "category": "custody",
+      "source": "User-provided attribution, 2026-11-22; ownership not independently verified"
+    },
+    "0:cf7ea235ed6f6517edce98026ef7618e9f6d81a1331d4e65ba718e2cd15f80ad": {
+      "category": "custody",
+      "source": "User-provided attribution, 2026-11-22; ownership not independently verified"
+    }
+  },
+  "template_repository": "Freebielife/TON-Observatory-Template",
+  "max_html_bytes": 2500000,
+  "ui": {
+    "operations_initial": 20,
+    "operations_max": 50,
+    "holders_initial": 10,
+    "holders_max": 20
+  },
+  "methodology": {
+    "valuation": "last observed swap in primary_pool times CURRENT total supply; not circulating market cap",
+    "primary_pool": "EQBjBklMBO8hh8cFSeyVNB0GEimYOO9IZ6WDLXjuL45Dsbxu",
+    "sellers": "sum of successful supported native TON swap sales; service roles excluded",
+    "holders": "balances excluding known services and identified contracts; unclassified accounts may remain until verified",
+    "burns": "accepted burn notifications and zero-address transfers shown as distinct evidence",
+    "usd": "historical TON/USD rate from CoinGecko",
+    "history": "incremental confirmed swaps; missing intervals remain partial"
+  },
+  "branding": {
+    "hero": {
+      "origin": "user_attachment",
+      "source": "https://chatgpt.com/library?file_id=libfile_06b3733473688191823e177b867dfb39&account_id=personal",
+      "file": "web/project-logo.webp"
+    },
+    "sectionFlag": {
+      "source": "TONecoFlags #193, explicitly selected by user; numbered-catalog thumbs/193.png",
+      "catalogueKey": null,
+      "emoji": null,
+      "file": "web/project-flag.webp"
+    },
+    "channel": "https://t.me/BabyYodaTONCHAIN"
+  }
+}
